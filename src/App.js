@@ -1,23 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import Layout from './pages/Layout';
+import Corretores from './pages/Corretores';
+import Segurados from './pages/Segurados';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
+import Proponentes from './pages/Proponentes';
+import RequireAuth from './components/RequireAuth';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<Layout/>}>
+
+          {/* Publicas */}
+          <Route path="/login" element={<Login/>}/>
+
+          {/* Protegidas */}
+          <Route element={<RequireAuth/>}>
+            <Route path="/Home" element={<Home/>}/>
+            <Route path="/Corretores" element={<Corretores/>}/>
+            <Route path="/Segurados" element={<Segurados/>}/>
+            <Route path="/Proponentes" element={<Proponentes/>}/>
+          </Route>
+
+          {/* Catch-all */}
+          <Route path="*" element={<NotFound/>}/>
+        </Route>
+      </Routes>
     </div>
   );
 }
